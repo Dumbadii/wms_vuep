@@ -1,11 +1,11 @@
 <template>
-  <div class="page-stockout-list">
+  <div class="page-stockback-list">
     <div class="columns is-multiline">
       <div class="column is-11">
-        <h1 class="title">Stockout List</h1>
+        <h1 class="title">Stockback List</h1>
       </div>
       <div class="column is-1">
-        <router-link exact-active-class="is-active" :to="{ name: 'stockout', params: {id: 0} }">
+        <router-link exact-active-class="is-active" :to="{ name: 'stockback', params: {id: 0} }">
           <span class="icon">
             <i class="fas fa-plus"></i>
           </span>
@@ -29,7 +29,7 @@
                   :key="item.id"
               >
                   <td>
-                    <router-link :to="{ name: 'stockout', params: {id: item.id} }">
+                    <router-link :to="{ name: 'stockback', params: {id: item.id} }">
                     {{ item.code }}
                     </router-link>
                   </td>
@@ -52,7 +52,7 @@
                 v-if="index==currentPage"
                 class="pagination-link is-current"
                 aria-label="Goto page {{ index }}"
-                @click="getStockoutList(index)"
+                @click="getStockbackList(index)"
               >
                 {{ index }}
               </a>
@@ -60,7 +60,7 @@
                 v-else-if="index==1 || index==pageTotal || Math.abs(index-currentPage)<pageOffset"
                 class="pagination-link"
                 aria-label="Goto page {{ index }}"
-                @click="getStockoutList(index)"
+                @click="getStockbackList(index)"
               >
                 {{ index }}
               </a>
@@ -84,7 +84,7 @@
 <script>
 import axios from 'axios'
 export default {
-  name: 'StokoutListView',
+  name: 'StokbackListView',
   data() {
     return {
       page: {
@@ -101,15 +101,15 @@ export default {
   },
   methods: {
     previousPage() {
-      this.getStockoutList(this.currentPage - 1)
+      this.getStockbackList(this.currentPage - 1)
     },
     nextPage() {
-      this.getStockoutList(this.currentPage + 1)
+      this.getStockbackList(this.currentPage + 1)
     },
-    getStockoutList(p) {
+    getStockbackList(p) {
       this.currentPage = p
       axios
-        .get(`/api/v1/stockout/list/?page=${p}`)
+        .get(`/api/v1/stockback/list/?page=${p}`)
         .then(response => {
           this.page = response.data
           console.log(this.page.results)
@@ -121,7 +121,7 @@ export default {
     }
   },
   mounted() {
-    this.getStockoutList(1)
+    this.getStockbackList(1)
   }
 }
 </script>

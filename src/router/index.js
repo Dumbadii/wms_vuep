@@ -4,9 +4,11 @@ import LoginView from '../views/Login.vue'
 import AccountView from '../views/Account.vue'
 import SignupView from '../views/Signup.vue'
 import StockinView from '../views/Stockin.vue'
-import StockoutView from '../views/Stockin.vue'
+import StockoutView from '../views/Stockout.vue'
 import StockinListView from '../views/StockinList.vue'
 import StockoutListView from '../views/StockoutList.vue'
+import StockbackView from '../views/Stockback.vue'
+import StockbackListView from '../views/StockbackList.vue'
 
 const routes = [
   {
@@ -58,6 +60,17 @@ const routes = [
     path: '/stockout/list',
     name: 'stockout_list',
     component: StockoutListView
+  },
+  {
+    path: '/stockback/:id',
+    name: 'stockback',
+    props: true,
+    component: StockbackView
+  },
+  {
+    path: '/stockback/list',
+    name: 'stockback_list',
+    component: StockbackListView
   }
 ]
 

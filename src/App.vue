@@ -99,19 +99,19 @@
               </router-link>
             </li>
             <li>
-              <router-link exact-active-class="is-active" :to="{ name: 'stockout_list' }">
+              <router-link exact-active-class="is-active" :to="{ name: 'stockback_list' }">
                 <span class="icon is-small"><i class="fa fa-link"></i></span> Stock Back
               </router-link>
             </li>
             <li>
-              <router-link exact-active-class="is-active" :to="{ name: 'stockout_list' }">
+              <router-link exact-active-class="is-active" to="/">
                 <span class="icon is-small"><i class="fa fa-link"></i></span> Stock Disable
               </router-link>
             </li>
           </ul>
         </li>
         <li>
-          <a href="#" class="">
+          <a href="http://localhost:8000/admin" class="" target="_blank">
             <span class="icon"><i class="fa fa-info"></i></span> Admin
           </a>
         </li>
