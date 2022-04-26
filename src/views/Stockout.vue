@@ -27,9 +27,9 @@
           <tbody>
             <tr v-for="detail in stockout.details" :key="detail.id">
               <td>{{ detail.barcode.code }}</td>
-              <td>{{ detail.barcode.item.name }}</td>
+              <td>{{ items.filter(i=>i.id==detail.barcode.item)[0].name }}</td>
               <td>{{ detail.barcode.amount }}</td>
-              <td>{{ detail.item.unit.name }}</td>
+              <td>{{ items.filter(i=>i.id==detail.barcode.item)[0].unit.name }}</td>
               <td>
                 <a v-if="!stockout.confirmed" @click="removeDetail(detail)">
                   <span class="icon-text">
@@ -42,109 +42,154 @@
             </tr>
           </tbody>
           <tfoot v-if="!stockout.confirmed">
-            <tr>
-                <td colspan="2">
-                    <div class="control">
-                        <input class="input" type="text" placeholder="Barcode input" value="">
-                    </div>
-                </td>
-                <td colspan="3">
-                </td>
-            </tr>
-            <tr>
-              <td>
-                    <div class="control">
-                    <select v-model="type1">
-                        <option v-for="obj in types1" :key="obj.id" :value="obj">{{ obj.code }}-{{ obj.name }}</option>
-                    </select>
-                    </div>
-              </td>
-              <td>
-                    <div class="control">
-                    <select v-model="type2">
-                        <option v-for="obj in subTypes2" :key="obj.id" :value="obj">{{ obj.code }}-{{ obj.name }}</option>
-                    </select>
-                </div>
-              </td>
-              <td>
-                    <div class="control">
-                    <select v-model="item">
-                        <option v-for="obj in subItems" :key="obj.id" :value="obj">{{ obj.code }}-{{ obj.name }}</option>
-                    </select>
-                    </div>
-              </td>
-              <td>
-                    <div class="control">
-                    <select v-model="barcode">
-                        <option v-for="obj in barcodes.filter(b=>b.item==item)" :key="obj.id" :value="obj">{{ obj.code }}-{{ obj.name }}</option>
-                    </select>
-                    </div>
-              </td>
-              <td> 
-                <a @click="addLine">
-                <span class="icon-text">
-                    <span class="icon">
-                    <i class="fas fa-plus-circle"></i>
-                    </span>
-                    <span>Add line</span>
-                </span>
-                </a>
-              </td>
-            </tr>
           </tfoot>
         </table>
       </div>
-
-      <div class="column is-12 box">
-        <h2 class="subtitle">Stockout details</h2>
-        <p class="has-text-grey mb-4">* All fields are required</p>
+      <div class="column is-12 box" v-if="!stockout.confirmed">
         <div class="columns is-multiline">
-        <div class="field column is-6">
-            <label>Stockout code*</label>
-            <div class="control">
-            <input type="text" class="input" v-model="stockout.code">
-            </div>
-        </div>
-        <div class="field column is-6">
-            <label>Employee*</label>
-            <div class="control">
-            <select v-model="newItem">
-                <option v-for="obj in items" :key="obj.id" :value="obj">{{ obj.code }}-{{ obj.name }}</option>
-            </select>
-            </div>
-        </div>
-        <div class="field column is-6">
-            <label>Desciption*</label>
-            <div class="control">
-            <input type="text" class="input" v-model="stockout.memo">
-            </div>
-        </div>
-        <div class="field column is-6">
-            <label>Department*</label>
-            <div class="control">
-            <select v-model="newItem">
-                <option v-for="obj in items" :key="obj.id" :value="obj">{{ obj.code }}-{{ obj.name }}</option>
-            </select>
-            </div>
-        </div>
-        </div>
-
-          <div class="notification is-danger mt-4" v-if="errors.length">
-            <p v-for="error in errors" :key="error"> {{ error }} </p>
+          <div class="column is-12">
+            <input class="bottomline" v-model="inputBarcode" @keyup.enter="addInputLine">
           </div>
-
-          <div>
-            <hr>
-            <div class="buttons">
-              <button class="button is-dark" @click="submitForm" v-if="!stockout.confirmed">Save</button>
-              <button class="button is-dark" @click="confirmStockout" v-if="parseInt(stockout.id)>0 && !stockout.confirmed">Confirm</button>
+          <div class="column is-2">
+            <div class="control">
+              <select v-model="type1" class="bottomline">
+                  <option v-for="obj in types1" :key="obj.id" :value="obj">{{ obj.code }}-{{ obj.name }}</option>
+              </select>
             </div>
+          </div>
+          <div class="column is-2">
+            <div class="control">
+              <select v-model="type2" class="bottomline">
+                  <option v-for="obj in subTypes2" :key="obj.id" :value="obj">{{ obj.code }}-{{ obj.name }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="column is-2">
+            <div class="control">
+              <select v-model="item" class="bottomline">
+                  <option v-for="obj in subItems" :key="obj.id" :value="obj">{{ obj.code }}-{{ obj.name }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="column is-2">
+            <div class="control">
+              <select v-model="newBarcode" class="bottomline">
+                  <option v-for="obj in subBarcodes" :key="obj.id" :value="obj">{{ obj.code }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="column is-2">
+            <a @click="addSelectLine">
+            <span class="icon-text">
+                <span class="icon">
+                <i class="fas fa-plus-circle"></i>
+                </span>
+                <span>Add line</span>
+            </span>
+            </a>
           </div>
         </div>
       </div>
+
+      <div class="column is-12 box" v-if="!stockout.confirmed">
+        <h2 class="subtitle">Stockout details</h2>
+        <p class="has-text-grey mb-4">* All fields are required</p>
+        <div class="columns is-multiline">
+          <div class="field column is-6">
+              <label>Stockout code*</label>
+              <div class="control">
+                <input type="text" class="input" v-model="stockout.code" disabled>
+              </div>
+          </div>
+          <div class="field column is-6">
+              <label>Cretae date*</label>
+              <div class="control">
+              <input type="text" class="input" v-model="stockout.create_date" disabled>
+              </div>
+          </div>
+          <div class="field column is-6">
+              <label>Department*</label>
+              <div class="control">
+              <select v-model="stockout.department" class="bottomline">
+                  <option v-for="obj in departments" :key="obj.id" :value="obj.id">{{ obj.code }}-{{ obj.name }}</option>
+              </select>
+              </div>
+          </div>
+          <div class="field column is-6">
+              <label>Employee*</label>
+              <div class="control">
+              <select v-model="stockout.employee" class="bottomline">
+                  <option v-for="obj in employees" :key="obj.id" :value="obj.id">{{ obj.user.username }}</option>
+              </select>
+              </div>
+          </div>
+          <div class="field column is-6">
+              <label>Desciption*</label>
+              <div class="control">
+              <input type="text" class="input" v-model="stockout.memo">
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="column is-12 box" v-else>
+        <h2 class="subtitle">Stockout details</h2>
+        <hr>
+        <div class="columns is-multiline">
+          <div class="field column is-6">
+            <p class="is-medium">
+              Stockout code: {{ stockout.code }} 
+            </p>
+          </div>
+          <div class="field column is-6">
+            <p class="is-medium">
+              Create date: {{ stockout.create_date }} 
+            </p>
+          </div>
+          <div class="field column is-6">
+            <p class="is-medium">
+              Department: {{ departments.filter(d=>d.id==stockout.department)[0].name }} 
+            </p>
+          </div>
+          <div class="field column is-6">
+            <p class="is-medium">
+              Employee: {{ employees.filter(e=>e.id==stockout.employee)[0].user.username }} 
+            </p>
+          </div>
+          <div class="field column is-6">
+            <p class="is-medium">
+              Description: {{ stockout.memo }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="notification is-danger mt-4" v-if="errors.length">
+        <p v-for="error in errors" :key="error"> {{ error }} </p>
+      </div>
+
+      <div>
+        <hr>
+        <div class="buttons">
+          <button class="button is-dark" @click="submitForm" v-if="!stockout.confirmed">Save</button>
+          <button class="button is-dark" @click="confirmStockout" v-if="parseInt(stockout.id)>0 && !stockout.confirmed">Confirm</button>
+        </div>
+      </div>
+      </div>
     </div>
   </template>
-
+  <style lang="scss">
+  .bottomline {
+    width: 100%;
+    outline: 0;
+    border-width: 0 0 2px;
+    /* #border-color: blue */
+  }
+  /* .bottomline:focus { */
+    /* #border-color: green */
+  /* } */
+  
+  </style>
   <script>
   import axios from 'axios'
   import { toast } from 'bulma-toast'
@@ -162,13 +207,13 @@
         stockout: {
           id: 0,
           code: '',
-          vendor: '',
+          employee: 0,
+          department: 0,
           create_date: '',
           memo: '',
           confirmed: false,
           details: [],
         },
-        newItem: Object,
         items: [],
         subItems: [],
         types1: [],
@@ -176,66 +221,66 @@
         subTypes2: [],
         barcodes: [],
         subBarcodes: [],
+        newBarcode: Object,
+        inputBarcode: '',
+        employees: [],
+        departments: [],
         type1: Object,
         type2: Object,
         item: Object,
         errors: [],
       }
     },
-    components: {
+    computed: {
     },
     mounted() {
       document.title = 'Stockout | WMS'
       this.getItems()
       this.getType1()
       this.getType2()
-      //if (this.id) {
-      //  this.getStockout()
-      //}
+      this.getBarcodes()
+      this.getEmployees()
+      this.getDepartments()
+      if (this.id) {
+        this.getStockout()
+      }
     },
     watch: {
       type1: function(){
-          console.log(this.type1)
-          this.subTypes2 = this.types2.filter(t => t.parent==this.type1.id)
+        this.subTypes2 = this.types2.filter(t => t.parent==this.type1.id)
       },
       type2: function(){
-          this.subItems = this.items.filter(i => i.type2 == this.type2.id)
+        this.subItems = this.items.filter(i => i.type2 == this.type2.id)
+      },
+      item: function(){
+        this.subBarcodes = this.barcodes.filter(b => b.item == this.item.id)
       },
     },
     methods: {
-      listBarcodes(detail){
-        console.log(`id${detail}`)
-        axios
-          .get(`/api/v1/barcodes/${detail}/`)
-          .then(response => {
-            const codes = response.data;
-            const msg = codes.map(c=>`<li>${c.code}</li>`).join('')
-            toast({
-              message: `<ul>${msg}</ul>`,
-              type: 'is-success',
-              position: 'center',
-              dismissible: true,
-              pauseOnHover: true,
-            })
-          })
-          .catch(error => {
-            console.log(error)
-          })
+      addInputLine() {
+        const newBarcodes = this.barcodes.filter(b=>b.code==this.inputBarcode)
+        if(newBarcodes.length) {
+          const codes = this.stockout.details.map(d=>d.barcode.code)
+          if(codes.indexOf(this.inputBarcode) == -1) {
+            let line = {
+              id: 0,
+              barcode: newBarcodes[0]
+            }
+            this.stockout.details.push(line);
+          }
+        }
+        this.inputBarcode=''
       },
-      addLine() {
-        const codes = this.stockout.details.map(d=>d.item.code)
-        if(codes.indexOf(this.newItem.code) != -1) {
+      addSelectLine() {
+        const barcodes = this.stockout.details.map(d=>d.barcode.code)
+        if(barcodes.indexOf(this.newBarcode.code) != -1) {
           return
         }
         let line = {
-          item: this.newItem,
           id: 0,
-          amount: 0.0,
-          price: 0.0,
-          barcode_count: 0,
+          barcode: this.newBarcode
         }
         this.stockout.details.push(line);
-
       },
       async getStockout() {
         if(parseInt(this.id)==0) {
@@ -245,18 +290,47 @@
           .get(`/api/v1/stockout/${this.id}/`)
           .then(response => {
             this.stockout = response.data
-            console.log(this.stockout)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      },
+    getItems() {
+      axios
+        .get(`/api/v1/items/`)
+        .then(response => {
+          this.items = response.data
+        })
+        .catch(error => {
+          console.log(error)  
+        })
+    },
+    getEmployees() {
+      axios
+        .get(`/api/v1/employees/`)
+        .then(response => {
+          this.employees = response.data
         })
         .catch(error => {
           console.log(error)
         })
     },
-    getItems() {
+    getDepartments() {
       axios
-        .get(`/api/v1/allitems/`)
+        .get(`/api/v1/departments/`)
         .then(response => {
-          this.items = response.data
-          console.log(this.items)
+          this.departments = response.data
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    getBarcodes() {
+      axios
+        .get(`/api/v1/barcodes/in/`)
+        .then(response => {
+          this.barcodes = response.data
+          
         })
         .catch(error => {
           console.log(error)
@@ -269,7 +343,7 @@
           this.types1 = response.data
         })
         .catch(error => {
-          console.log(error)
+          console.log(error) 
         })
     },
     getType2() {
@@ -279,7 +353,7 @@
           this.types2 = response.data
         })
         .catch(error => {
-          console.log(error)
+          console.log(error) 
         })
     },
     removeDetail(detail) {
@@ -287,15 +361,17 @@
     },
     submitForm() {
       this.errors = []
-      if (this.stockout.code === '') {
-          this.errors.push('The code field is missing!')
+      if (this.department == 0) {
+          this.errors.push('The department field is missing!')
       }
-      if (this.stockout.vendor === '') {
-          this.errors.push('The vendor field is missing!')
+
+      if (this.employee == 0) {
+          this.errors.push('The employee field is missing!')
       }
 
       let post_stockout = {
-        vendor: this.stockout.vendor,
+        department: this.stockout.department,
+        employee: this.stockout.employee,
         memo: this.stockout.memo,
         details: []
       }
@@ -305,19 +381,15 @@
       for(const d of this.stockout.details) {
         const obj={
           id: d.id,
-          price: d.price,
-          amount: d.amount,
-          barcode_count: d.barcode_count,
-          item: d.item.id
+          barcode: d.barcode.id,
         }
         post_stockout.details.push(obj)
       }
+
       if (!this.errors.length) {
         axios
           .post('/api/v1/stockout/create/', post_stockout)
           .then(() => {
-            console.log('success')
-
             toast({
               message: 'stockout saved!',
               type: 'is-success',
@@ -328,7 +400,7 @@
           })
           .catch(error => {
             this.errors.push('Something went wrong. Please try again')
-            console.log(error)
+            
           })
       }
     },
@@ -336,20 +408,18 @@
       axios
         .post(`/api/v1/stockout/confirm/${this.id}/`)
         .then(() => {
-          console.log('success')
-        toast({
-          message: 'The stockout was confirmed',
-          type: 'is-success',
-          dismissible: true,
-          duration: 2000,
-          position: 'bottom-right',
-        })
+          toast({
+            message: 'The stockout was confirmed',
+            type: 'is-success',
+            dismissible: true,
+            duration: 2000,
+            position: 'bottom-right',
+          })
           const toPath = this.$route.query.to || '/stockout/list'
           this.$router.push(toPath)
         })
         .catch(error => {
           this.errors.push('Something wrong when confirming..')
-          console.log('error')
         })
     }
   },

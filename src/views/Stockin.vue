@@ -102,7 +102,7 @@
           </table>
         </div>
 
-        <div class="column is-12 box">
+        <div class="column is-12 box" v-if="!stockin.confirmed">
           <h2 class="subtitle">Stockin details</h2>
           <p class="has-text-grey mb-4">* All fields are required</p>
           <div class="columns is-multiline">
@@ -131,17 +131,44 @@
               </div>
             </div>
           </div>
+        </div>
 
-          <div class="notification is-danger mt-4" v-if="errors.length">
-            <p v-for="error in errors" :key="error"> {{ error }} </p>
-          </div>
-
-          <div>
-            <hr>
-            <div class="buttons">
-              <button class="button is-dark" @click="submitForm" v-if="!stockin.confirmed">Save</button>
-              <button class="button is-dark" @click="confirmStockin" v-if="parseInt(stockin.id)>0 && !stockin.confirmed">Confirm</button>
+        <div class="column is-12 box" v-else>
+          <h2 class="subtitle">Stockin details</h2>
+          <hr>
+          <div class="columns is-multiline">
+            <div class="field column is-6">
+              <p class="is-medium">
+                Stockin code: {{ stockin.code }} 
+              </p>
             </div>
+            <div class="field column is-6">
+              <p class="is-medium">
+                Create date: {{ stockin.create_date }} 
+              </p>
+            </div>
+            <div class="field column is-6">
+              <p class="is-medium">
+                Vender name: {{ stockin.vendor }}
+              </p>
+            </div>
+            <div class="field column is-6">
+              <p class="is-medium">
+                Description: {{ stockin.memo }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="notification is-danger mt-4" v-if="errors.length">
+          <p v-for="error in errors" :key="error"> {{ error }} </p>
+        </div>
+
+        <div>
+          <hr>
+          <div class="buttons">
+            <button class="button is-dark" @click="submitForm" v-if="!stockin.confirmed">Save</button>
+            <button class="button is-dark" @click="confirmStockin" v-if="parseInt(stockin.id)>0 && !stockin.confirmed">Confirm</button>
           </div>
         </div>
       </div>
@@ -236,7 +263,7 @@
     },
     getItems() {
       axios
-        .get(`/api/v1/allitems/`)
+        .get(`/api/v1/items/`)
         .then(response => {
           this.items = response.data
         })
