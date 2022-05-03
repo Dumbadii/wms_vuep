@@ -327,7 +327,7 @@
     },
     getBarcodes() {
       axios
-        .get(`/api/v1/barcodes/in/`)
+        .get(`/api/v1/barcodes/status/1/`)
         .then(response => {
           this.barcodes = response.data
           

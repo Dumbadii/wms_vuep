@@ -9,6 +9,9 @@ import StockinListView from '../views/StockinList.vue'
 import StockoutListView from '../views/StockoutList.vue'
 import StockbackView from '../views/Stockback.vue'
 import StockbackListView from '../views/StockbackList.vue'
+import StockdisableView from '../views/Stockdisable.vue'
+import StockdisableListView from '../views/StockdisableList.vue'
+import BarcodeListView from '../views/BarcodeList.vue'
 
 const routes = [
   {
@@ -19,9 +22,6 @@ const routes = [
   {
     path: '/about',
     name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
@@ -71,6 +71,22 @@ const routes = [
     path: '/stockback/list',
     name: 'stockback_list',
     component: StockbackListView
+  },
+  {
+    path: '/stockdisable/:id',
+    name: 'stockdisable',
+    props: true,
+    component: StockdisableView
+  },
+  {
+    path: '/stockdisable/list',
+    name: 'stockdisable_list',
+    component: StockdisableListView
+  },
+  {
+    path: '/barcode/list',
+    name: 'barocde_list',
+    component: BarcodeListView
   }
 ]
 

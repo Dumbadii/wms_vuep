@@ -216,7 +216,7 @@
       listBarcodes(detail){
         console.log(`id${detail}`)
         axios
-          .get(`/api/v1/barcodes/${detail}/`)
+          .get(`/api/v1/barcodes/detail/${detail}/`)
           .then(response => {
             const codes = response.data;
             const msg = codes.map(c=>`<li>${c.code}</li>`).join('')

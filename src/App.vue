@@ -56,12 +56,13 @@
       <ul class="menu-list">
         <li>
           <a href="#" class="">
-            <span class="icon"><i class="fa fa-home"></i></span> Home
+            <!-- <span class="icon"><i class="fas fa-chart-line"></i></span> Home -->
+            <span class="icon"><i class="fas fa-tachometer-alt"></i></span> Home
           </a>
         </li>
         <li>
           <a href="#">
-            <span class="icon"><i class="fa fa-table"></i></span> Inventory
+            <span class="icon"><i class="fas fa-boxes"></i></span> Inventory
           </a>
 
           <ul>
@@ -76,15 +77,15 @@
               </a>
             </li>
             <li>
-              <a href="#">
-                <span class="icon is-small"><i class="fa fa-link"></i></span> Barcode
-              </a>
+              <router-link exact-active-class="is-active" :to="{ name: 'barcode_list' }">
+                <span class="icon is-small"><i class="fa fa-link"></i></span> Barcodes
+              </router-link>
             </li>
           </ul>
         </li>
         <li>
           <a href="#" class="">
-            <span class="icon"><i class="fa fa-table"></i></span> Daily Job
+            <span class="icon"><i class="fas fa-dolly-flatbed"></i></span> Daily Job
           </a>
 
           <ul>
@@ -104,7 +105,7 @@
               </router-link>
             </li>
             <li>
-              <router-link exact-active-class="is-active" to="/">
+              <router-link exact-active-class="is-active" :to="{ name: 'stockdisable_list' }">
                 <span class="icon is-small"><i class="fa fa-link"></i></span> Stock Disable
               </router-link>
             </li>
@@ -112,7 +113,7 @@
         </li>
         <li>
           <a href="http://localhost:8000/admin" class="" target="_blank">
-            <span class="icon"><i class="fa fa-info"></i></span> Admin
+            <span class="icon"><i class="fa fa-user-cog"></i></span> Admin
           </a>
         </li>
       </ul>
