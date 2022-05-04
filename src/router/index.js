@@ -12,17 +12,24 @@ import StockbackListView from '../views/StockbackList.vue'
 import StockdisableView from '../views/Stockdisable.vue'
 import StockdisableListView from '../views/StockdisableList.vue'
 import BarcodeListView from '../views/BarcodeList.vue'
+import DashboardView from '../views/Dashboard.vue'
+import store from '../store'
 
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: HomeView
-  },
+  // {
+  //   path: '/',
+  //   name: 'home',
+  //   component: HomeView
+  // },
   {
     path: '/about',
     name: 'about',
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+  },
+  {
+    path: '/',
+    name: 'home',
+    component: DashboardView
   },
   {
     path: '/login',
@@ -32,61 +39,91 @@ const routes = [
   {
     path: '/account',
     name: 'account',
-    component: AccountView
+    component: AccountView,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/signup',
     name: 'signup',
-    component: SignupView
+    component: SignupView,
   },
   {
     path: '/stockin/:id',
     name: 'stockin',
     props: true,
-    component: StockinView
+    component: StockinView,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/stockin/list',
     name: 'stockin_list',
-    component: StockinListView
+    component: StockinListView,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/stockout/:id',
     name: 'stockout',
     props: true,
-    component: StockoutView
+    component: StockoutView,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/stockout/list',
     name: 'stockout_list',
-    component: StockoutListView
+    component: StockoutListView,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/stockback/:id',
     name: 'stockback',
     props: true,
-    component: StockbackView
+    component: StockbackView,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/stockback/list',
     name: 'stockback_list',
-    component: StockbackListView
+    component: StockbackListView,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/stockdisable/:id',
     name: 'stockdisable',
     props: true,
-    component: StockdisableView
+    component: StockdisableView,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/stockdisable/list',
     name: 'stockdisable_list',
-    component: StockdisableListView
+    component: StockdisableListView,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/barcode/list',
-    name: 'barocde_list',
-    component: BarcodeListView
+    name: 'barcode_list',
+    component: BarcodeListView,
+    meta: {
+      requiresAuth: true
+    }
   }
 ]
 
@@ -94,5 +131,15 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
-
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!store.state.isAuthenticated) {
+      next({ name: 'login' })
+    } else {
+      next() // go to wherever I'm going
+    }
+  } else {
+    next() // does not require auth, make sure to always call next()!
+  }
+})
 export default router

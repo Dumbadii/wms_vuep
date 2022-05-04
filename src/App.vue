@@ -32,8 +32,6 @@
         </div>
       </div>
       <div class="navbar-end">
-          <!-- <router-link class="navbar-item" to="/products/Summer/">Summer</router-link> -->
-          <!-- <router-link class="navbar-item" to="/products/Winter">Winter</router-link> -->
           <div class="navbar-item">
             <div class="buttons">
               <router-link v-if="!$store.state.isAuthenticated" class="button is-light" to="/login">
@@ -55,10 +53,9 @@
       <p class="menu-label is-hidden-touch">Navigation</p>
       <ul class="menu-list">
         <li>
-          <a href="#" class="">
-            <!-- <span class="icon"><i class="fas fa-chart-line"></i></span> Home -->
-            <span class="icon"><i class="fas fa-tachometer-alt"></i></span> Home
-          </a>
+          <router-link exact-active-class="is-active" :to="{ name: 'home' }">
+            <span class="icon"><i class="fas fa-tachometer-alt"></i></span> Dashboard
+          </router-link>
         </li>
         <li>
           <a href="#">
@@ -66,16 +63,6 @@
           </a>
 
           <ul>
-            <li>
-              <a href="#">
-                <span class="icon is-small"><i class="fa fa-link"></i></span> Items
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <span class="icon is-small"><i class="fa fa-link"></i></span> Item Groups
-              </a>
-            </li>
             <li>
               <router-link exact-active-class="is-active" :to="{ name: 'barcode_list' }">
                 <span class="icon is-small"><i class="fa fa-link"></i></span> Barcodes

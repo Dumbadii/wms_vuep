@@ -91,7 +91,7 @@ export default {
       },
       currentPage: 0,
       pageTotal: 0,
-      pageSize: 5,
+      pageSize: 10,
       pageOffset: 2,
     }
   },

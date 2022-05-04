@@ -6,11 +6,9 @@
       </div>
 
       <div class="column is-1">
-        <router-link exact-active-class="is-active" :to="{ name: 'stockin_list' }">
           <span class="icon">
-            <i class="fas fa-window-close"></i>
+            <i class="fas fa-window-close" @click="$router.back()"></i>
           </span>
-        </router-link>
       </div>
 
       <div class="column is-12 box">
