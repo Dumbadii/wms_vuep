@@ -35,10 +35,10 @@
           <div class="navbar-item">
             <div class="buttons">
               <router-link v-if="!$store.state.isAuthenticated" class="button is-light" to="/login">
-                Login
+                登录
               </router-link>
               <router-link v-if="$store.state.isAuthenticated" class="button is-light" to="/account">
-                Account
+                账户
               </router-link>
             </div>
           </div>
@@ -54,53 +54,53 @@
       <ul class="menu-list">
         <li>
           <router-link exact-active-class="is-active" :to="{ name: 'home' }">
-            <span class="icon"><i class="fas fa-tachometer-alt"></i></span> Dashboard
+            <span class="icon"><i class="fas fa-tachometer-alt"></i></span> 主页
           </router-link>
         </li>
         <li>
           <a href="#">
-            <span class="icon"><i class="fas fa-boxes"></i></span> Inventory
+            <span class="icon"><i class="fas fa-boxes"></i></span> 库存
           </a>
 
           <ul>
             <li>
               <router-link exact-active-class="is-active" :to="{ name: 'barcode_list' }">
-                <span class="icon is-small"><i class="fa fa-link"></i></span> Barcodes
+                <span class="icon is-small"><i class="fa fa-link"></i></span> 物品信息
               </router-link>
             </li>
           </ul>
         </li>
         <li>
           <a href="#" class="">
-            <span class="icon"><i class="fas fa-dolly-flatbed"></i></span> Daily Job
+            <span class="icon"><i class="fas fa-dolly-flatbed"></i></span> 日常操作
           </a>
 
           <ul>
             <li>
               <router-link exact-active-class="is-active" :to="{ name: 'stockin_list' }">
-                <span class="icon is-small"><i class="fa fa-link"></i></span> Stock In
+                <span class="icon is-small"><i class="fa fa-link"></i></span> 入库
               </router-link>
             </li>
             <li>
               <router-link exact-active-class="is-active" :to="{ name: 'stockout_list' }">
-                <span class="icon is-small"><i class="fa fa-link"></i></span> Stock Out
+                <span class="icon is-small"><i class="fa fa-link"></i></span> 领用
               </router-link>
             </li>
             <li>
               <router-link exact-active-class="is-active" :to="{ name: 'stockback_list' }">
-                <span class="icon is-small"><i class="fa fa-link"></i></span> Stock Back
+                <span class="icon is-small"><i class="fa fa-link"></i></span> 交还
               </router-link>
             </li>
             <li>
               <router-link exact-active-class="is-active" :to="{ name: 'stockdisable_list' }">
-                <span class="icon is-small"><i class="fa fa-link"></i></span> Stock Disable
+                <span class="icon is-small"><i class="fa fa-link"></i></span> 作废
               </router-link>
             </li>
           </ul>
         </li>
         <li>
           <a href="http://localhost:8000/admin" class="" target="_blank">
-            <span class="icon"><i class="fa fa-user-cog"></i></span> Admin
+            <span class="icon"><i class="fa fa-user-cog"></i></span> 后台管理
           </a>
         </li>
       </ul>

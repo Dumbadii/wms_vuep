@@ -27,7 +27,7 @@
            <span v-for="item in stat.deptStat" :key="item.name" class="mr-2">{{ item.name }}<span class="has-text-danger">{{ item.cnt }}</span>项,</span>
           </p>
             <router-link :to="{ name: 'barcode_list' }" class="button is-light mb-4">
-              detail..
+              详细..
             </router-link>
         </div>
       </div>
@@ -35,7 +35,7 @@
       <div class="column is-4">
         <div class="box">
           <p class="is-size-4 has-text-grey">
-            Latest StockinList
+          入库单
           </p>
           <h3 class="is-size-4"></h3>
           <table class="table is-fullwidth">
@@ -50,7 +50,7 @@
           </table>
           <p class="is-size-6 has-text-grey"></p>
           <router-link :to="{ name: 'stockin_list' }" class="button is-light mb-4">
-            more..
+            更多..
           </router-link>
         </div>
       </div>
@@ -58,7 +58,7 @@
       <div class="column is-4">
         <div class="box">
           <p class="is-size-4 has-text-grey">
-            Latest StockoutList
+          领用单
           </p>
           <h3 class="is-size-4"></h3>
           <table class="table is-fullwidth">
@@ -73,7 +73,7 @@
           </table>
           <p class="is-size-6 has-text-grey">
             <router-link :to="{ name: 'stockout_list' }" class="button is-light mb-4">
-              more..
+              更多..
             </router-link>
           </p>
         </div>
@@ -82,7 +82,7 @@
       <div class="column is-4">
         <div class="box">
           <p class="is-size-4 has-text-grey">
-            Latest StockbackList
+          交还单
           </p>
           <h3 class="is-size-4"></h3>
           <table class="table is-fullwidth">
@@ -97,7 +97,7 @@
           </table>
           <p class="is-size-6 has-text-grey"></p>
           <router-link :to="{ name: 'stockback_list' }" class="button is-light mb-4">
-            more..
+            更多..
           </router-link>
         </div>
       </div>
