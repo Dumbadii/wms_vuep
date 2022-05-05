@@ -2,20 +2,20 @@
   <div class="page-log-in">
     <div class="columns">
       <div class="column is-4 is-offset-4">
-        <h1 class="title">Log in</h1>
+        <h1 class="title">登录</h1>
         
         <form @submit.prevent="submitForm">
           <div class="field">
-            <label>Username</label>
+            <label>账号</label>
             <div class="control">
               <input type="text" class="input" v-model="username">
             </div>
           </div>
 
           <div class="field">
-            <label>Password</label>
+            <label>密码</label>
             <div class="control">
-              <input type="text" class="input" v-model="password">
+              <input type="password" class="input" v-model="password">
             </div>
           </div>
 
@@ -25,13 +25,13 @@
 
           <div class="field">
             <div class="control">
-              <button class="button is-dark">Log in</button>
+              <button class="button is-dark">确认</button>
             </div>
           </div>
 
           <hr>
 
-          Or <router-link to="/signup">click here</router-link> to sign up!
+          或者 <router-link to="/signup">点击这里</router-link> 注册!
         </form>
       </div>
     </div>

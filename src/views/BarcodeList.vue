@@ -2,7 +2,7 @@
   <div class="page-barcode-list">
     <div class="columns is-multiline">
       <div class="column is-12">
-        <h1 class="title">Barcode List</h1>
+        <h1 class="title">物品列表</h1>
       </div>
       <div class="column is-12">
         <div class="field is-horizontal">
@@ -11,7 +11,7 @@
               <div class="control">
                 <div class="select is-fullwidth">
                   <select v-model="type1">
-                      <option value="">Type1</option>
+                      <option value="">一级分类</option>
                       <option v-for="obj in types1" :key="obj.id" :value="obj">{{ obj.code }}-{{ obj.name }}</option>
                   </select>
                 </div>
@@ -21,7 +21,7 @@
               <div class="control">
                 <div class="select is-fullwidth">
                   <select v-model="type2">
-                      <option value="">Type2</option>
+                      <option value="">二级分类</option>
                       <option v-for="obj in subTypes2" :key="obj.id" :value="obj">{{ obj.code }}-{{ obj.name }}</option>
                   </select>
                 </div>
@@ -31,7 +31,7 @@
               <div class="control">
                 <div class="select is-fullwidth">
                   <select v-model="item">
-                      <option value="">Item</option>
+                      <option value="">物品</option>
                       <option v-for="obj in subItems" :key="obj.id" :value="obj.code">{{ obj.code }}-{{ obj.name }}</option>
                   </select>
                 </div>
@@ -41,7 +41,7 @@
               <div class="control">
                 <div class="select is-fullwidth">
                   <select v-model="department">
-                      <option value="">Department</option>
+                      <option value="">位置</option>
                       <option v-for="obj in departments" :key="obj.id" :value="obj.code">{{ obj.code }}-{{ obj.name }}</option>
                   </select>
                 </div>
@@ -56,7 +56,7 @@
               <div class="control">
                 <div class="select is-fullwidth">
                   <select v-model="status">
-                      <option value="">Status</option>
+                      <option value="">物品状态</option>
                       <option v-for="obj in statuss" :key="obj.statusId" :value="obj.statusId">{{ obj.statusId }}-{{ obj.statusName }}</option>
                   </select>
                 </div>
@@ -64,23 +64,23 @@
             </div>
             <div class="field is-narrow">
               <div class="control">
-                <input class="input is-danger" type="text" placeholder="ItemName" v-model="itemName">
+                <input class="input is-danger" type="text" placeholder="品名" v-model="itemName">
               </div>
             </div>
             <div class="field is-narrow">
               <div class="control">
-                <input class="input is-danger" type="text" placeholder="Barcode" v-model="code">
+                <input class="input is-danger" type="text" placeholder="条码" v-model="code">
               </div>
             </div>
             <div class="field is-grouped is-grouped-centered">
               <div class="control">
                 <button class="button is-primary" @click="getBarcode(1)">
-                  Search
+                  搜索
                 </button>
               </div>
               <div class="control">
                 <button class="button is-primary" @click="reset">
-                  Reset
+                  重置
                 </button>
               </div>
             </div>
@@ -92,15 +92,15 @@
         <table class="table is-fullwidth">
           <thead>
               <tr>
-                  <th>No</th>
-                  <th>Barcode</th>
-                  <th>Type1</th>
-                  <th>Type2</th>
-                  <th>Item</th>
-                  <th>Location</th>
-                  <th>Amount</th>
-                  <th>Unit</th>
-                  <th>Status</th>
+                  <th>序号</th>
+                  <th>条码</th>
+                  <th>一级分类</th>
+                  <th>二级分类</th>
+                  <th>品名</th>
+                  <th>位置</th>
+                  <th>数量</th>
+                  <th>单位</th>
+                  <th>状态</th>
               </tr>
           </thead>
 
@@ -129,8 +129,8 @@
 
       <div class="column is-11">
         <nav class="pagination" role="navigation" aria-label="pagination">
-          <a class="pagination-previous" v-if="page.previous" @click="previousPage">Previous</a>
-          <a class="pagination-next" v-if="page.next" @click="nextPage">Next</a>
+          <a class="pagination-previous" v-if="page.previous" @click="previousPage">上一页</a>
+          <a class="pagination-next" v-if="page.next" @click="nextPage">下一页</a>
           <ul class="pagination-list">
             <li v-for="index in pageTotal" :key="index">
               <a

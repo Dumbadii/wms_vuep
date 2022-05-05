@@ -2,7 +2,7 @@
   <div class="page-stockin">
     <div class="columns is-multiline">
       <div class="column is-11">
-        <h1 class="title">Stockin</h1>
+        <h1 class="title">入库</h1>
       </div>
 
       <div class="column is-1">
@@ -15,14 +15,14 @@
         <table class="table is-fullwidth">
           <thead>
             <tr>
-              <th>Item name</th>
-              <th>Item code</th>
-              <th>Item brand</th>
-              <th>Unit</th>
-              <th>Amount</th>
-              <th>Barcodes</th>
-              <th>Price</th>
-              <th>Op</th>
+              <th>品名</th>
+              <th>编号</th>
+              <th>品牌</th>
+              <th>单位</th>
+              <th>数量</th>
+              <th>条码数</th>
+              <th>单价</th>
+              <th>操作</th>
             </tr>
           </thead>
           <tbody v-if="!stockin.confirmed">
@@ -91,7 +91,7 @@
                       <span class="icon">
                         <i class="fas fa-plus-circle"></i>
                       </span>
-                      <span>Add line</span>
+                      <span>添加</span>
                     </span>
                   </a>
                 </td>
@@ -101,29 +101,29 @@
         </div>
 
         <div class="column is-12 box" v-if="!stockin.confirmed">
-          <h2 class="subtitle">Stockin details</h2>
-          <p class="has-text-grey mb-4">* All fields are required</p>
+          <h2 class="subtitle">基本信息</h2>
+          <p class="has-text-grey mb-4">* 必填</p>
           <div class="columns is-multiline">
             <div class="field column is-6">
-              <label>Stockin code*</label>
+              <label>入库单号</label>
               <div class="control">
-                <input type="text" class="input" v-model="stockin.code">
+                <input type="text" class="input" v-model="stockin.code" placeholder="自动生成" disabled>
               </div>
             </div>
             <div class="field column is-6">
-              <label>Vendor name*</label>
+              <label>物品来源*</label>
               <div class="control">
                 <input type="text" class="input" v-model="stockin.vendor">
               </div>
             </div>
             <div class="field column is-6">
-              <label>Create date*</label>
+              <label>入库日期</label>
               <div class="control">
-                <input type="text" class="input" v-model="stockin.create_date">
+                <input type="text" class="input" v-model="stockin.create_date" placeholder="自动生成" disabled>
               </div>
             </div>
             <div class="field column is-6">
-              <label>Desciption*</label>
+              <label>备注</label>
               <div class="control">
                 <input type="text" class="input" v-model="stockin.memo">
               </div>
@@ -132,27 +132,27 @@
         </div>
 
         <div class="column is-12 box" v-else>
-          <h2 class="subtitle">Stockin details</h2>
+          <h2 class="subtitle">基本信息</h2>
           <hr>
           <div class="columns is-multiline">
             <div class="field column is-6">
               <p class="is-medium">
-                Stockin code: {{ stockin.code }} 
+                入库单号: {{ stockin.code }} 
               </p>
             </div>
             <div class="field column is-6">
               <p class="is-medium">
-                Create date: {{ stockin.create_date }} 
+                入库日期: {{ stockin.create_date }} 
               </p>
             </div>
             <div class="field column is-6">
               <p class="is-medium">
-                Vender name: {{ stockin.vendor }}
+                物品来源: {{ stockin.vendor }}
               </p>
             </div>
             <div class="field column is-6">
               <p class="is-medium">
-                Description: {{ stockin.memo }}
+                备注: {{ stockin.memo }}
               </p>
             </div>
           </div>
@@ -165,8 +165,8 @@
         <div>
           <hr>
           <div class="buttons">
-            <button class="button is-dark" @click="submitForm" v-if="!stockin.confirmed">Save</button>
-            <button class="button is-dark" @click="confirmStockin" v-if="parseInt(stockin.id)>0 && !stockin.confirmed">Confirm</button>
+            <button class="button is-dark" @click="submitForm" v-if="!stockin.confirmed">保存</button>
+            <button class="button is-dark" @click="confirmStockin" v-if="parseInt(stockin.id)>0 && !stockin.confirmed">确认</button>
           </div>
         </div>
       </div>
@@ -274,9 +274,6 @@
     },
     submitForm() {
       this.errors = []
-      if (this.stockin.code === '') {
-          this.errors.push('The code field is missing!')
-      }
       if (this.stockin.vendor === '') {
           this.errors.push('The vendor field is missing!')
       }

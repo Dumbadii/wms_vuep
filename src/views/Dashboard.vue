@@ -82,7 +82,7 @@
       <div class="column is-4">
         <div class="box">
           <p class="is-size-4 has-text-grey">
-          交还单
+          回收单
           </p>
           <h3 class="is-size-4"></h3>
           <table class="table is-fullwidth">

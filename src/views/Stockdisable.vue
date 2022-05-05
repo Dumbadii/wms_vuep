@@ -2,7 +2,7 @@
   <div class="page-stockdisable">
     <div class="columns is-multiline">
       <div class="column is-11">
-        <h1 class="title">Stockdisable</h1>
+        <h1 class="title">作废</h1>
       </div>
 
       <div class="column is-1">
@@ -17,11 +17,11 @@
         <table class="table is-fullwidth">
           <thead>
             <tr>
-              <th>Barcode</th>
-              <th>Item name</th>
-              <th>Amount</th>
-              <th>Unit</th>
-              <th>Op</th>
+              <th>条码</th>
+              <th>品名</th>
+              <th>数量</th>
+              <th>单位</th>
+              <th>操作</th>
             </tr>
           </thead>
           <tbody>
@@ -84,7 +84,7 @@
                 <span class="icon">
                 <i class="fas fa-plus-circle"></i>
                 </span>
-                <span>Add line</span>
+                <span>添加</span>
             </span>
             </a>
           </div>
@@ -92,23 +92,23 @@
       </div>
 
       <div class="column is-12 box" v-if="!stockdisable.confirmed">
-        <h2 class="subtitle">Stockdisable details</h2>
-        <p class="has-text-grey mb-4">* All fields are required</p>
+        <h2 class="subtitle">基本信息</h2>
+        <p class="has-text-grey mb-4">* 必填项</p>
         <div class="columns is-multiline">
           <div class="field column is-6">
-              <label>Stockdisable code*</label>
+              <label>单号</label>
               <div class="control">
-                <input type="text" class="input" v-model="stockdisable.code" disabled>
+                <input type="text" class="input" v-model="stockdisable.code" placeholder="自动生成" disabled>
               </div>
           </div>
           <div class="field column is-6">
-              <label>Cretae date*</label>
+              <label>日期</label>
               <div class="control">
-              <input type="text" class="input" v-model="stockdisable.create_date" disabled>
+              <input type="text" class="input" v-model="stockdisable.create_date" placeholder="自动生成" disabled>
               </div>
           </div>
           <div class="field column is-6">
-              <label>Desciption*</label>
+              <label>备注</label>
               <div class="control">
               <input type="text" class="input" v-model="stockdisable.memo">
               </div>
@@ -117,22 +117,22 @@
       </div>
 
       <div class="column is-12 box" v-else>
-        <h2 class="subtitle">Stockdisable details</h2>
+        <h2 class="subtitle">基本信息</h2>
         <hr>
         <div class="columns is-multiline">
           <div class="field column is-6">
             <p class="is-medium">
-              Stockdisable code: {{ stockdisable.code }} 
+              单号: {{ stockdisable.code }} 
             </p>
           </div>
           <div class="field column is-6">
             <p class="is-medium">
-              Create date: {{ stockdisable.create_date }} 
+              日期: {{ stockdisable.create_date }} 
             </p>
           </div>
           <div class="field column is-6">
             <p class="is-medium">
-              Description: {{ stockdisable.memo }}
+              备注: {{ stockdisable.memo }}
             </p>
           </div>
         </div>
@@ -145,8 +145,8 @@
       <div>
         <hr>
         <div class="buttons">
-          <button class="button is-dark" @click="submitForm" v-if="!stockdisable.confirmed">Save</button>
-          <button class="button is-dark" @click="confirmStockdisable" v-if="parseInt(stockdisable.id)>0 && !stockdisable.confirmed">Confirm</button>
+          <button class="button is-dark" @click="submitForm" v-if="!stockdisable.confirmed">保存</button>
+          <button class="button is-dark" @click="confirmStockdisable" v-if="parseInt(stockdisable.id)>0 && !stockdisable.confirmed">确认</button>
         </div>
       </div>
       </div>

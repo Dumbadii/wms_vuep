@@ -2,7 +2,7 @@
   <div class="page-stockout">
     <div class="columns is-multiline">
       <div class="column is-11">
-        <h1 class="title">Stockout</h1>
+        <h1 class="title">领用</h1>
       </div>
 
       <div class="column is-1">
@@ -15,11 +15,11 @@
         <table class="table is-fullwidth">
           <thead>
             <tr>
-              <th>Barcode</th>
-              <th>Item name</th>
-              <th>Amount</th>
-              <th>Unit</th>
-              <th>Op</th>
+              <th>条码</th>
+              <th>品名</th>
+              <th>数量</th>
+              <th>单位</th>
+              <th>操作</th>
             </tr>
           </thead>
           <tbody>
@@ -82,7 +82,7 @@
                 <span class="icon">
                 <i class="fas fa-plus-circle"></i>
                 </span>
-                <span>Add line</span>
+                <span>添加</span>
             </span>
             </a>
           </div>
@@ -90,23 +90,23 @@
       </div>
 
       <div class="column is-12 box" v-if="!stockout.confirmed">
-        <h2 class="subtitle">Stockout details</h2>
-        <p class="has-text-grey mb-4">* All fields are required</p>
+        <h2 class="subtitle">基本信息</h2>
+        <p class="has-text-grey mb-4">* 必填项</p>
         <div class="columns is-multiline">
           <div class="field column is-6">
-              <label>Stockout code*</label>
+              <label>领用单号</label>
               <div class="control">
-                <input type="text" class="input" v-model="stockout.code" disabled>
+                <input type="text" class="input" v-model="stockout.code" placeholder="自动生成" disabled>
               </div>
           </div>
           <div class="field column is-6">
-              <label>Cretae date*</label>
+              <label>领用日期</label>
               <div class="control">
-              <input type="text" class="input" v-model="stockout.create_date" disabled>
+              <input type="text" class="input" v-model="stockout.create_date" placeholder="自动生成" disabled>
               </div>
           </div>
           <div class="field column is-6">
-              <label>Department*</label>
+              <label>领用部门*</label>
               <div class="control">
               <select v-model="stockout.department" class="bottomline">
                   <option v-for="obj in departments" :key="obj.id" :value="obj.id">{{ obj.code }}-{{ obj.name }}</option>
@@ -114,7 +114,7 @@
               </div>
           </div>
           <div class="field column is-6">
-              <label>Employee*</label>
+              <label>领用人员*</label>
               <div class="control">
               <select v-model="stockout.employee" class="bottomline">
                   <option v-for="obj in employees" :key="obj.id" :value="obj.id">{{ obj.user.username }}</option>
@@ -122,7 +122,7 @@
               </div>
           </div>
           <div class="field column is-6">
-              <label>Desciption*</label>
+              <label>备注</label>
               <div class="control">
               <input type="text" class="input" v-model="stockout.memo">
               </div>
@@ -131,32 +131,32 @@
       </div>
 
       <div class="column is-12 box" v-else>
-        <h2 class="subtitle">Stockout details</h2>
+        <h2 class="subtitle">基本信息</h2>
         <hr>
         <div class="columns is-multiline">
           <div class="field column is-6">
             <p class="is-medium">
-              Stockout code: {{ stockout.code }} 
+              领用单号: {{ stockout.code }} 
             </p>
           </div>
           <div class="field column is-6">
             <p class="is-medium">
-              Create date: {{ stockout.create_date }} 
+              领用日期: {{ stockout.create_date }} 
             </p>
           </div>
           <div class="field column is-6">
             <p class="is-medium">
-              Department: {{ departments.filter(d=>d.id==stockout.department)[0].name }} 
+              领用部门: {{ departments.filter(d=>d.id==stockout.department)[0].name }} 
             </p>
           </div>
           <div class="field column is-6">
             <p class="is-medium">
-              Employee: {{ employees.filter(e=>e.id==stockout.employee)[0].user.username }} 
+              领用人员: {{ employees.filter(e=>e.id==stockout.employee)[0].user.username }} 
             </p>
           </div>
           <div class="field column is-6">
             <p class="is-medium">
-              Description: {{ stockout.memo }}
+              备注: {{ stockout.memo }}
             </p>
           </div>
         </div>
@@ -169,8 +169,8 @@
       <div>
         <hr>
         <div class="buttons">
-          <button class="button is-dark" @click="submitForm" v-if="!stockout.confirmed">Save</button>
-          <button class="button is-dark" @click="confirmStockout" v-if="parseInt(stockout.id)>0 && !stockout.confirmed">Confirm</button>
+          <button class="button is-dark" @click="submitForm" v-if="!stockout.confirmed">保存</button>
+          <button class="button is-dark" @click="confirmStockout" v-if="parseInt(stockout.id)>0 && !stockout.confirmed">确认</button>
         </div>
       </div>
       </div>

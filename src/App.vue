@@ -15,7 +15,7 @@
     <div class="navbar-menu" id="navbar-menu" :class="{'is-active': showMobileMenu}">
       <div class="navbar-start">
         <div class="navbar-item">
-          <form method="get" action="/search/">
+          <!-- <form method="get" action="/search/">
             <div class="field has-addons">
               <div class="control">
                 <input type="text" class="input" placeholder="What are you looking for?" name="query">
@@ -28,7 +28,7 @@
                 </button>
               </div>
             </div>
-          </form>
+          </form> -->
         </div>
       </div>
       <div class="navbar-end">
@@ -38,7 +38,7 @@
                 登录
               </router-link>
               <router-link v-if="$store.state.isAuthenticated" class="button is-light" to="/account">
-                账户
+                退出
               </router-link>
             </div>
           </div>
@@ -50,7 +50,7 @@
     
     <!-- <aside class="column is-2 is-narrow-mobile is-fullheight section is-hidden-mobile" v-if="$store.state.isAuthenticated"> -->
     <aside class="column is-2 is-narrow-mobile is-fullheight section is-hidden-mobile" v-if="true">
-      <p class="menu-label is-hidden-touch">Navigation</p>
+      <p class="menu-label is-hidden-touch">导航</p>
       <ul class="menu-list">
         <li>
           <router-link exact-active-class="is-active" :to="{ name: 'home' }">
@@ -88,7 +88,7 @@
             </li>
             <li>
               <router-link exact-active-class="is-active" :to="{ name: 'stockback_list' }">
-                <span class="icon is-small"><i class="fa fa-link"></i></span> 交还
+                <span class="icon is-small"><i class="fa fa-link"></i></span> 回收
               </router-link>
             </li>
             <li>
