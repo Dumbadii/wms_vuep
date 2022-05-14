@@ -171,6 +171,7 @@
         <div class="buttons">
           <button class="button is-dark" @click="submitForm" v-if="!stockback.confirmed">Save</button>
           <button class="button is-dark" @click="confirmStockback" v-if="parseInt(stockback.id)>0 && !stockback.confirmed">Confirm</button>
+          <button class="button is-dark" @click="getPdf" v-if="stockback.confirmed">打印</button>
         </div>
       </div>
       </div>
@@ -191,6 +192,7 @@
   <script>
   import axios from 'axios'
   import { toast } from 'bulma-toast'
+  const fileDownload = require('js-file-download')
 
   export default {
     name: 'StockbackView',
@@ -419,7 +421,18 @@
         .catch(error => {
           this.errors.push('Something wrong when confirming..')
         })
-    }
+    },
+    getPdf() {
+      const pk = this.id
+      axios
+        .get(`/api/v1/stockback/pdf/${pk}/`, {
+            responseType: 'blob',
+        }).then(res=> {
+          fileDownload(res.data, `stockback${pk}.pdf`);
+        }).catch(err=> {
+          console.log(err);
+        })
+    },
   },
   computed: {
   }

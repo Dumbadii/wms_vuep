@@ -147,6 +147,7 @@
         <div class="buttons">
           <button class="button is-dark" @click="submitForm" v-if="!stockdisable.confirmed">保存</button>
           <button class="button is-dark" @click="confirmStockdisable" v-if="parseInt(stockdisable.id)>0 && !stockdisable.confirmed">确认</button>
+          <button class="button is-dark" @click="getPdf" v-if="stockdisable.confirmed">打印</button>
         </div>
       </div>
       </div>
@@ -167,6 +168,7 @@
   <script>
   import axios from 'axios'
   import { toast } from 'bulma-toast'
+  const fileDownload = require('js-file-download')
 
   export default {
     name: 'StockdisableView',
@@ -360,7 +362,18 @@
         .catch(error => {
           this.errors.push('Something wrong when confirming..')
         })
-    }
+    },
+    getPdf() {
+      const pk = this.id
+      axios
+        .get(`/api/v1/stockdisable/pdf/${pk}/`, {
+            responseType: 'blob',
+        }).then(res=> {
+          fileDownload(res.data, `stockdisable${pk}.pdf`);
+        }).catch(err=> {
+          console.log(err);
+        })
+    },
   },
   computed: {
   }

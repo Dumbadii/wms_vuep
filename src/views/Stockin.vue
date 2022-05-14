@@ -167,6 +167,7 @@
           <div class="buttons">
             <button class="button is-dark" @click="submitForm" v-if="!stockin.confirmed">保存</button>
             <button class="button is-dark" @click="confirmStockin" v-if="parseInt(stockin.id)>0 && !stockin.confirmed">确认</button>
+            <button class="button is-dark" @click="getPdf" v-if="stockin.confirmed">打印</button>
           </div>
         </div>
       </div>
@@ -176,6 +177,7 @@
   <script>
   import axios from 'axios'
   import { toast } from 'bulma-toast'
+  const fileDownload = require('js-file-download')
 
   export default {
     name: 'StockinView',
@@ -335,7 +337,18 @@
           this.errors.push('Something wrong when confirming..')
           console.log('error')
         })
-    }
+    },
+    getPdf() {
+      const pk = this.id
+      axios
+        .get(`/api/v1/stockin/pdf/${pk}/`, {
+            responseType: 'blob',
+        }).then(res=> {
+          fileDownload(res.data, `stockin${pk}.pdf`);
+        }).catch(err=> {
+          console.log(err);
+        })
+    },
   },
   computed: {
   }
