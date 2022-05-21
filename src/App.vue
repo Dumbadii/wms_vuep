@@ -99,7 +99,7 @@
           </ul>
         </li>
         <li>
-          <a href="http://localhost:8000/admin" class="" target="_blank">
+          <a href="https:/eachow.site/admin" class="" target="_blank">
             <span class="icon"><i class="fa fa-user-cog"></i></span> 后台管理
           </a>
         </li>

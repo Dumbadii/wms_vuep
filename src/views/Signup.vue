@@ -25,6 +25,30 @@
             </div>
           </div>
 
+          <div class="field">
+            <label>First name</label>
+            <div class="control">
+              <input type="text" class="input" v-model="first_name">
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Last name</label>
+            <div class="control">
+              <input type="text" class="input" v-model="last_name">
+            </div>
+          </div>
+
+          <div class="field">
+              <label>部门</label>
+              <div class="control">
+                <select v-model="department" class="bottomline">
+                    <option value="">--</option>
+                    <option v-for="obj in departments" :key="obj.id" :value="obj.id">{{ obj.code }}-{{ obj.name }}</option>
+                </select>
+              </div>
+          </div>
+
           <div class="notification is-danger" v-if="errors.length">
             <p v-for="error in errors" :key="error">{{ error }}</p>
           </div>
@@ -54,10 +78,27 @@ export default {
       username: '',
       password: '',
       password2: '',
+      first_name: '',
+      last_name: '',
+      department: '',
+      departments: [],
       errors: []
     }
   },
+  mounted() {
+    this.getDepartments()
+  },
   methods: {
+    getDepartments() {
+      axios
+        .get(`/api/v1/departments/`)
+        .then(response => {
+          this.departments = response.data
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
     submitForm() {
       this.errors = []
 
@@ -67,6 +108,15 @@ export default {
       if(this.password === '') {
         this.erros.push('The password is too short')
       }
+      if(this.first_name === '') {
+        this.errors.push('The first name is missing')
+      }
+      if(this.department === '') {
+        this.errors.push('The department is missing')
+      }
+      if(this.last_name === '') {
+        this.erros.push('The last name is missing')
+      }
       if(this.password2 !== this.password) {
         this.errors.push('The passwords doesn\'t mathc')
       }
@@ -75,6 +125,9 @@ export default {
         let data = new FormData()
         data.append('username', this.username)
         data.append('password', this.password)
+        data.append('last_name', this.last_name)
+        data.append('first_name', this.first_name)
+        data.append('department', this.department)
 
         axios
           .post("/api/v1/user/register/", data)
